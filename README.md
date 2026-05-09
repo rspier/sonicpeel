@@ -1,6 +1,6 @@
 # SonicPeel 🍊🔊
 
-**SonicPeel** is a premium, browser-based utility that "peels" the audio from your video files. With a stunning neon aesthetic and smooth mechanical animations, it extracts high-quality MP3s using client-side FFmpeg.
+**SonicPeel** is a browser-based utility that "peels" the audio from your video files. With a stunning neon aesthetic and smooth mechanical animations, it extracts high-quality MP3s using client-side FFmpeg.
 
 ![SonicPeel Icon](favicon.png)
 
