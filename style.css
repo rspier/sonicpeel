@@ -134,19 +134,21 @@ h1.glitch::before {
     position: absolute;
     top: 0;
     left: 0;
-    width: 0;
+    width: 100%;
     height: 100%;
     color: var(--primary);
-    overflow: hidden;
-    transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity: 0;
+    transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
     z-index: 1;
     white-space: nowrap;
-    text-shadow: 0 0 10px var(--primary-glow);
-    background: transparent; /* Removed the black bar */
+    text-shadow: 0 0 15px var(--primary-glow);
+    pointer-events: none;
+    transform: translateX(0) skewX(0);
 }
 
 h1.glitch:hover::before {
-    width: 100%;
+    opacity: 0.5;
+    transform: translateX(30px) skewX(-15deg);
 }
 
 /* App Card */
