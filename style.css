@@ -4,7 +4,7 @@
     --secondary: #4facfe;
     --accent: #ff0080;
     --bg-dark: #0f172a;
-    --bg-card: rgba(30, 41, 59, 0.7);
+    --bg-card: rgba(30, 41, 59, 0.8);
     --text-main: #f1f5f9;
     --text-muted: #94a3b8;
     --font-sans: 'Outfit', sans-serif;
@@ -103,37 +103,85 @@ h1 {
     text-transform: uppercase;
 }
 
+h1.glitch {
+    position: relative;
+    cursor: default;
+    transition: transform 0.3s ease;
+}
+
+h1.glitch:hover {
+    transform: skewX(-5deg) rotate(-1deg);
+}
+
+h1.glitch::before {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    color: var(--primary);
+    overflow: hidden;
+    transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 1;
+    border-right: 3px solid var(--primary);
+    white-space: nowrap;
+    text-shadow: 0 0 10px var(--primary-glow);
+    background: transparent; /* Removed the black bar */
+}
+
+h1.glitch:hover::before {
+    width: 100%;
+}
+
 /* App Card */
 .app-card {
+    position: relative;
+    perspective: 1000px;
     background: var(--bg-card);
     backdrop-filter: blur(16px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 24px;
-    padding: 3rem;
+    padding: 2rem;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
     min-height: 450px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    display: grid;
+    grid-template-areas: "content";
+    align-items: center;
     transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Drop Zone */
+.drop-zone, .processing-view, .success-view {
+    grid-area: content;
+    width: 100%;
+    z-index: 1;
+}
+
 .drop-zone {
     border: 2px dashed rgba(255, 255, 255, 0.2);
     border-radius: 20px;
     padding: 3rem;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.3s ease, transform 1.2s cubic-bezier(0.4, 0, 0.2, 1), opacity 1s ease;
     position: relative;
     overflow: hidden;
+    background: var(--bg-card);
+    transform-origin: left center;
+    z-index: 2; /* Ensure it's above the processing view initially */
 }
 
 .drop-zone:hover, .drop-zone.drag-over {
     border-color: var(--primary);
     background: rgba(0, 242, 254, 0.05);
-    transform: scale(1.02);
+    transform: scale(1.01);
 }
+
+.peeling-active .drop-zone {
+    transform: rotateY(-110deg) translateX(-20%);
+    opacity: 0;
+    pointer-events: none;
+}
+
 
 .icon-wrapper {
     width: 80px;
@@ -185,6 +233,8 @@ h1 {
 }
 
 .btn-secondary {
+    position: relative;
+    z-index: 5;
     background: rgba(255, 255, 255, 0.1);
     color: #fff;
     padding: 0.75rem 1.5rem;

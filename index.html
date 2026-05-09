@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AudioExtract | Sonic Grinder</title>
-    <meta name="description" content="Extract high-quality MP3 audio from your video files directly in your browser. Fast, secure, and fun.">
+    <title>SonicPeel | Extract Audio</title>
+    <meta name="description" content="SonicPeel: Peel the high-quality MP3 audio from your video files directly in your browser. Fast, secure, and fun.">
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
     
-    <!-- Styles -->
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="favicon.png">
     
     <!-- COI Service Worker for SharedArrayBuffer -->
     <script src="coi-serviceworker.js"></script>
@@ -26,11 +26,19 @@
 
     <main class="container">
         <header>
-            <h1 class="glitch" data-text="SONIC GRINDER">SONIC GRINDER</h1>
-            <p class="subtitle">Extract audio with a touch of magic</p>
+            <h1 class="glitch" data-text="SONIC PEEL">SONIC PEEL</h1>
+            <p class="subtitle">Peel the audio from your video</p>
         </header>
 
-        <div class="app-card">
+        <div id="main-card" class="app-card">
+            <!-- Peeling Animation Layers -->
+            <div class="peel-shadow"></div>
+            <div class="peel-layer">
+                <div class="icon-wrapper">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-video"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="7" x2="7" y2="7"></line><line x1="2" y1="17" x2="7" y2="17"></line><line x1="17" y1="17" x2="22" y2="17"></line><line x1="17" y1="7" x2="22" y2="7"></line></svg>
+                </div>
+            </div>
+
             <!-- Drop Zone -->
             <div id="drop-zone" class="drop-zone">
                 <div class="drop-zone-content">
@@ -40,7 +48,6 @@
                     <h3>Drag & Drop Video</h3>
                     <p>MP4, MPG, or AVI</p>
                     <button id="browse-btn" type="button" class="btn-secondary">OR BROWSE FILES</button>
-                    <input type="file" id="file-input" accept="video/*,.mpg,.mp4,.avi" class="visually-hidden">
                 </div>
             </div>
 
@@ -93,6 +100,8 @@
             <p>Processed entirely in your browser. No files are uploaded to any server.</p>
         </footer>
     </main>
+
+    <input type="file" id="file-input" accept="video/*,.mpg,.mp4,.avi" class="visually-hidden">
 
     <!-- FFmpeg.wasm Scripts -->
     <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js"></script>

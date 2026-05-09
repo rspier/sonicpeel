@@ -4,6 +4,7 @@ let ffmpeg = null;
 
 // DOM Elements
 const dropZone = document.getElementById('drop-zone');
+const mainCard = document.getElementById('main-card');
 const fileInput = document.getElementById('file-input');
 const browseBtn = document.getElementById('browse-btn');
 const processingView = document.getElementById('processing-view');
@@ -60,10 +61,15 @@ async function initFFmpeg() {
 async function handleFile(file) {
     if (!file) return;
     
-    // UI Transitions
-    dropZone.classList.add('hidden');
-    processingView.classList.remove('hidden');
-    createWaveform();
+    // Trigger Peeling Animation
+    mainCard.classList.add('peeling-active');
+    
+    // Wait for animation to finish before switching view
+    setTimeout(() => {
+        dropZone.classList.add('hidden');
+        processingView.classList.remove('hidden');
+        createWaveform();
+    }, 800);
     
     try {
         statusText.textContent = 'Spinning up engines...';
@@ -97,6 +103,7 @@ async function handleFile(file) {
 }
 
 function resetApp() {
+    mainCard.classList.remove('peeling-active');
     dropZone.classList.remove('hidden');
     processingView.classList.add('hidden');
     successView.classList.add('hidden');
@@ -106,8 +113,12 @@ function resetApp() {
 }
 
 // Event Listeners
-dropZone.addEventListener('click', () => {
-    fileInput.click();
+const triggerInput = () => fileInput.click();
+
+dropZone.addEventListener('click', triggerInput);
+browseBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    triggerInput();
 });
 
 fileInput.addEventListener('click', (e) => {
